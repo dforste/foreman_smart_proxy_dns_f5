@@ -7,7 +7,7 @@ module Proxy::Dns::F5
     # Settings listed under default_settings are required.
     # An exception will be raised if they are initialized with nil values.
     # Settings not listed under default_settings are considered optional and by default have nil value.
-    default_settings :gtms = {
+    default_settings :gtms => {
       "10.0.0.10" => {
          "password"=> "password",
          "query_server"=> "10.0.0.10",
