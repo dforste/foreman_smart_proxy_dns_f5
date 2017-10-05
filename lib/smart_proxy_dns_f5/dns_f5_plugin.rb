@@ -21,6 +21,6 @@ module Proxy::Dns::F5
     # Loads plugin files and dependencies
     load_classes ::Proxy::Dns::F5::PluginConfiguration
     # Loads plugin dependency injection wirings
-    load_dependency_injection_wirings ::Proxy::Dns::PluginTemplate::PluginConfiguration
+    load_dependency_injection_wirings ::Proxy::Dns::F5::PluginConfiguration
   end
 end
