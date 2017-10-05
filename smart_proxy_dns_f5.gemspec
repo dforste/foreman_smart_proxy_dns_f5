@@ -1,17 +1,17 @@
-require File.expand_path('../lib/smart_proxy_dns_plugin_template/dns_plugin_template_version', __FILE__)
+require File.expand_path('../lib/smart_proxy_dns_f5/dns_f5_version', __FILE__)
 require 'date'
 
 Gem::Specification.new do |s|
-  s.name        = 'smart_proxy_dns_plugin_template'
-  s.version     = Proxy::Dns::PluginTemplate::VERSION
+  s.name        = 'smart_proxy_dns_f5'
+  s.version     = Proxy::Dns::F5::VERSION
   s.date        = Date.today.to_s
   s.license     = 'GPL-3.0'
-  s.authors     = ['TODO: Your name']
-  s.email       = ['TODO: Your email']
-  s.homepage    = 'https://github.com/theforeman/smart_proxy_dns_plugin_template'
+  s.authors     = ['Doug Forster']
+  s.email       = ['doug.forster@gmail.com']
+  s.homepage    = 'https://github.com/dforste/smart_proxy_dns_f5'
 
-  s.summary     = "TODO DNS provider plugin for Foreman's smart proxy"
-  s.description = "TODO DNS provider plugin for Foreman's smart proxy"
+  s.summary     = "DNS provider plugin for Foreman's smart proxy"
+  s.description = "DNS provider plugin for Foreman's smart proxy"
 
   s.files       = Dir['{config,lib,bundler.d}/**/*'] + ['README.md', 'LICENSE']
   s.test_files  = Dir['test/**/*']

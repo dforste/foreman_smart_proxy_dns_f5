@@ -1,4 +1,4 @@
-require 'smart_proxy_dns_plugin_template/dns_plugin_template_configuration'
-require 'smart_proxy_dns_plugin_template/dns_plugin_template_plugin'
+require 'smart_proxy_dns_plugin_template/dns_f5_configuration'
+require 'smart_proxy_dns_plugin_template/dns_f5_plugin'
 
-module Proxy::Dns::PluginTemplate; end
+module Proxy::Dns::F5; end
