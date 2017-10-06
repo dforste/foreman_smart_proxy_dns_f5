@@ -8,7 +8,7 @@ module Proxy::Dns::F5
 
     def initialize(gtms, dns_ttl)
       @gtms = gtms
-
+      raise Proxy::Dns::Debug.new("Sucessfully initialize with @gtms = #{gtms}")
       super('localhost', dns_ttl)
     end
 
