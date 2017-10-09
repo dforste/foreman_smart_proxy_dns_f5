@@ -1,8 +1,8 @@
-# SmartProxyDnsPluginTemplate
+# Smart Proxy DNS F5 provider
 
-*Introduction here*
+*Introduction*
 
-This plugin adds a new DNS provider for managing records in MyService.
+This plugin adds a new DNS provider for managing records in an array of F5 GTMs using an account with ssh access and zrsh(ZoneRunner) commands.
 
 ## Installation
 
@@ -15,11 +15,25 @@ This plugin is compatible with Smart Proxy 1.10 or higher.
 
 To enable this DNS provider, edit `/etc/foreman-proxy/settings.d/dns.yml` and set:
 
-    :use_provider: dns_plugin_template
+    :use_provider: dns_f5
 
-Configuration options for this plugin are in `/etc/foreman-proxy/settings.d/dns_plugin_template.yml` and include:
+Configuration options for this plugin are in `/etc/foreman-proxy/settings.d/dns_f5.yml` and include:
 
-* example_setting: change this as an example
+* gtms: A hash object containing one or more addresses for GTMs. Each has contains the following:
+* username: The username to connect to the GTM with. This user needs the advanced shell access setup when created. It has only been tested as admin on all partitions but more restrictive will likely work.
+* password: The password to connect to the GTM with.
+* view: The view to create the A records and PTR records. We also support deletion on host removal.
+* query_server: This is the server to query in case you need to proxy your request out somewhere. IE you are modifying a view you would not get normally.
+
+Example
+```
+ :gtms:
+   "10.0.0.10":
+     password: password
+     query_server: "10.0.0.10"
+     username: foreman_proxy
+     view: Default
+```
 
 ## Contributing
 
@@ -27,7 +41,7 @@ Fork and send a Pull Request. Thanks!
 
 ## Copyright
 
-Copyright (c) *year* *your name*
+Copyright (c) 2017 Doug Forster
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,4 +55,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
