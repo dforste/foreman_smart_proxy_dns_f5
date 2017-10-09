@@ -2,13 +2,11 @@ require 'dns_common/dns_common'
 
 module Proxy::Dns::F5
   class Record < ::Proxy::Dns::Record
-    include Proxy::Log
 
     attr_reader :gtms
 
     def initialize(gtms, dns_ttl)
       @gtms = gtms
-      raise Proxy::Dns::Debug.new("Sucessfully initialize with @gtms = #{gtms}")
       super('localhost', dns_ttl)
     end
 
@@ -22,6 +20,7 @@ module Proxy::Dns::F5
           zrsh_exec(gtm, meta, "addrr " + meta['view'] + " " + get_zone(gtm, meta, meta['view'], name) + " " + name + " 3600 A " + value)
         end
       end
+      nil
     end
 
     def do_remove(name, type)
@@ -33,6 +32,7 @@ module Proxy::Dns::F5
           zrsh_exec(gtm, meta, "delrr " + meta['view'] + " " + get_zone(gtm, meta, meta['view'], host_entry) + " " + host_entry + " 3600 A " + name)
         end
       end
+      nil
     end
 
     private
