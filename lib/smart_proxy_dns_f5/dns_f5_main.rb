@@ -1,15 +1,15 @@
 module Proxy::Dns::F5
   class Record < ::Proxy::Dns::Record
 
-    attr_reader :gtm, :username, :password, :dns_ttl
+    attr_reader :gtm, :username, :password, :view
 
-    def initialize(gtm, username, password, dns_ttl)
+    def initialize(gtm, username, password, view,  dns_ttl)
       @gtm = gtm # Address of the bigIP GTM running zonerunner.
       @username = username # Username to ssh with. 
       @password = password # Password for user. 
       @view = view # View to manage reccord in. 
       @zones = get_zones()
-
+      @dns_ttl = dns_ttl
       # Common settings can be defined by the main plugin, it's ok to use them locally.
       # Please note that providers must not rely on settings defined by other providers or plugins they are not related to.
       super('localhost', dns_ttl)
@@ -37,7 +37,7 @@ module Proxy::Dns::F5
       require 'net/ssh'
       logger.info("Running this command on the GTM: #{command}.")
       Net::SSH.start( @gtm, @username, :password => @password ) do|ssh|
-        ssh.exec!("echo '" + command + "' | /usr/local/bin/zrsh")
+        return ssh.exec!("echo '" + command + "' | /usr/local/bin/zrsh")
       end
     end
 
@@ -45,7 +45,7 @@ module Proxy::Dns::F5
       # Get all the zones in the current view. 
       # Returns an array of the view. 
       view_info = zrsh_exec("displayview " + @view)
-      view_info.match(/  \s+(.+)$\nOptions/m)[1].split(/\n\s+/)
+      return view_info.match(/  \s+(.+)$\nOptions/m)[1].split(/\n\s+/)
     end
 
     def get_zone_by_address(address)
@@ -53,6 +53,7 @@ module Proxy::Dns::F5
       @zones.each do |zone| 
         return zone if address.include? (zone) 
       end
+      return nil
     end
 
     def get_records_from_zone(zone)
@@ -91,12 +92,14 @@ module Proxy::Dns::F5
         logger.info("Creating record for #{fqdn}, value: #{address}, type: #{type}, ttl: #{@dns_ttl}.")
         zrsh_exec("addrr " + @view + " " + get_zone_by_address(fqdn) + " " + fqdn + " " + @dns_ttl.to_s + " " + type + " " + address)
       end 
+      return nil
     end 
 
     def remove_record(fqdn, address, type, ttl)
       # Remove a given record. 
       logger.info("Deleting DNS record #{fqdn}, value: #{address}, type: #{type}, ttl: #{ttl}.")
       zrsh_exec('delrr ' + @view + " " + get_zone_by_address(fqdn) + " " + fqdn + " " + ttl.to_s + " " + type + " " + address)
+      return nil
     end 
 
     def remove_all_records(fqdn)
@@ -107,6 +110,7 @@ module Proxy::Dns::F5
           remove_record(fqdn, record[:response], record[:type], record[:ttl])
         end
       end
+      return nil
     end
   end
 end

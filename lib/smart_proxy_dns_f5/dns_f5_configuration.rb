@@ -9,8 +9,8 @@ module ::Proxy::Dns::F5
       container_instance.dependency :dns_provider, (lambda do
         ::Proxy::Dns::F5::Record.new(
             settings[:gtm],
-            settings[:password],
             settings[:username],
+            settings[:password],
             settings[:view],
             settings[:dns_ttl])
       end)
