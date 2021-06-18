@@ -3,9 +3,7 @@
 # Configuration file for 'dns_f5' dns provider
 #
 
-# :gtms:
-#   "10.0.0.10":
-#     password: password
-#     query_server: "10.0.0.10"
-#     username: foreman_proxy
-#     view: Default
+:gtm: 10.0.0.10
+:password: password
+:username: foreman_proxy
+:view: Default  

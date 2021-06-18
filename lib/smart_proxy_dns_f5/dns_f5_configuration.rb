@@ -8,7 +8,10 @@ module ::Proxy::Dns::F5
     def load_dependency_injection_wirings(container_instance, settings)
       container_instance.dependency :dns_provider, (lambda do
         ::Proxy::Dns::F5::Record.new(
-            settings[:gtms],
+            settings[:gtm],
+            settings[:password],
+            settings[:username],
+            settings[:view],
             settings[:dns_ttl])
       end)
     end
