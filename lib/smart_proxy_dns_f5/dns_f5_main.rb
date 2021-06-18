@@ -1,7 +1,7 @@
 module Proxy::Dns::F5
   class Record < ::Proxy::Dns::Record
 
-    attr_reader :gtms
+    attr_reader :gtm, :username, :password, :dns_ttl
 
     def initialize(gtm, username, password, dns_ttl)
       @gtm = gtm # Address of the bigIP GTM running zonerunner.
